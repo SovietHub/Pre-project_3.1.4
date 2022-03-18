@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example</title>
+</head>
+
+<body>
+<h1>User, welcome spring boot security page!</h1>
+<h2>Your parameters in the table below:</h2>
+<table border="1">
+<tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Role</th>
+</tr>
+    <tr>
+        <td><th:block th:text="${user.getId()}">VALUE</th:block></td>
+        <td><th:block th:text="${user.getName()}">VALUE</th:block></td>
+        <td><th:block th:text="${user.getAge()}">VALUE</th:block></td>
+        <td th:each="userService : ${user.roles}"><p th:text="${#strings.replace(userService.roleName, 'ROLE_', '')}">VALUE</p></td>
+    </tr>
+</table>
+<br>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <th:block><a th:href="@{/admin}">Control panel</a></th:block>
+</div>
+<br>
+<th:block><a th:href="@{/logout}">Exit</a></th:block>
+</body>
+</html>
