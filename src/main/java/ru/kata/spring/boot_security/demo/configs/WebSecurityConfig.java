@@ -26,9 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.successUserHandler = successUserHandler;
     }
 
-
     @Autowired
-    public void configure(AuthenticationManagerBuilder auth) throws Exception { ;
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -47,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // указываем action с формы логина
                 .loginProcessingUrl("/login")
                 // указываем параметры логина и пароля с формы логина
-                .usernameParameter("j_username")
+                .usernameParameter("j_userName")
                 .passwordParameter("j_password")
                 // даем доступ к форме логина всем
                 .permitAll();

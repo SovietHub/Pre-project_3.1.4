@@ -24,7 +24,7 @@
         <tr>
             <th>Role:</th>
             <th>
-                <select th:name="roleName">
+                <select th:name="roleName" size="2">
                     <option th:each="role : ${roles}"
                             th:value="${role.roleName}"
                             th:utext="${#strings.replace(role.roleName, 'ROLE_', '')}"></option>

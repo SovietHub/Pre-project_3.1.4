@@ -3,8 +3,8 @@ package ru.kata.spring.boot_security.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.dao.RoleDaoImp;
-import ru.kata.spring.boot_security.demo.dao.UserDaoImp;
+import ru.kata.spring.boot_security.demo.dao.RoleDao;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.models.Role;
 
 import java.util.List;
@@ -13,48 +13,49 @@ import java.util.Set;
 @Service
 public class RoleServiceImp implements RoleService {
 
+    //Связывание через интерфейс
     @Autowired
-    private UserDaoImp userDaoImp;
+    private UserDao userDao;
 
     @Autowired
-    private RoleDaoImp roleDaoImp;
+    private RoleDao roleDao;
 
     @Override
     public Role show(long id) {
-        return roleDaoImp.show(id);
+        return roleDao.show(id);
     }
 
     @Transactional
     @Override
     public void save(Role role) {
-        roleDaoImp.save(role);
+        roleDao.save(role);
     }
 
     @Transactional
     @Override
     public void update(Role updateRole) {
-        roleDaoImp.update(updateRole);
+        roleDao.update(updateRole);
     }
 
     @Transactional
     @Override
     public void delete(long id) {
-        roleDaoImp.delete(id);
+        roleDao.delete(id);
     }
 
     @Override
-    public List<Role> index() {
-        return roleDaoImp.index();
+    public List<Role> getAllRoles() {
+        return roleDao.getAllRoles();
     }
 
     @Transactional
     @Override
-    public Set<Role> getAllRoles(long userId) {
-        return userDaoImp.gelAllRoles(userId);
+    public Set<Role> getAllRolesFromUser(long userId) {
+        return userDao.gelAllRoles(userId);
     }
 
     @Override
-    public Role getRoleFromUser(String roleName) {
-        return roleDaoImp.getRoleFromUser(roleName);
+    public Role getRoleByName(String roleName) {
+        return roleDao.getRoleByName(roleName);
     }
 }

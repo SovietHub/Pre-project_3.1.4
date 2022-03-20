@@ -1,16 +1,14 @@
 package ru.kata.spring.boot_security.demo.dao;
 
-import org.hibernate.HibernateException;
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.models.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class RoleDaoImp implements RoleDao{
+public class RoleDaoImp implements RoleDao {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -27,31 +25,24 @@ public class RoleDaoImp implements RoleDao{
 
     @Override
     public void update(Role role) {
-        entityManager.merge(role);
+        entityManager.createQuery("update Role set roleName = :role where id = :id")
+                .setParameter("role", role.getRoleName())
+                .setParameter("id",  role.getId())
+                .executeUpdate();
     }
 
     @Override
     public void delete(long id) {
-        Role userRole = entityManager.find(Role.class, id);
-        entityManager.remove(userRole);
+        entityManager.createQuery("delete from Role where id= :id").setParameter("id", (int) id).executeUpdate();
     }
 
     @Override
-    public List<Role> index() {
-        List<Role> listRole = new ArrayList<>();
-        try {
-            listRole = entityManager
-                    .createQuery("FROM Role", Role.class)
-                    .getResultList();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            return listRole;
-        }
+    public List<Role> getAllRoles() {
+        return entityManager.createQuery("FROM Role ", Role.class).getResultList();
     }
 
     @Override
-    public Role getRoleFromUser(String roleName) {
-        return  entityManager.find(Role.class, roleName);
+    public Role getRoleByName(String roleName) {
+        return entityManager.find(Role.class, roleName);
     }
 }

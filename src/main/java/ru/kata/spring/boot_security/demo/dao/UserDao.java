@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface UserDao {
 
-    List<User> index();
+    List<User> getAllUsers();
 
     User show(long id);
 
@@ -18,8 +18,10 @@ public interface UserDao {
 
     void delete(long id);
 
-    Set<Role> gelAllRoles (long userId);
+    Set<Role> gelAllRoles(long userId);
 
     void addRoleUser(long userId, Role role);
+
+    User findByName(String userName);
 
 }

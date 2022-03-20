@@ -15,10 +15,9 @@
     </tr>
     <th:block th:each="user1 : ${users}">
         <tr>
-            <td><th:block th:text="${user1.getId()}">VALUE</th:block></td>
-            <td><th:block th:text="${user1.getName()}">VALUE</th:block></td>
-            <td><th:block th:text="${user1.getAge()}">VALUE</th:block></td>
-            <td><th:block th:text="${user1.password}">VALUE</th:block></td>
+            <td><th:block th:text="${user1.getName()}"></th:block></td>
+            <td><th:block th:text="${user1.getAge()}"></th:block></td>
+            <td><th:block th:text="${user1.password}"></th:block></td>
             <td ><p th:each="user2 : ${user1.roles}" th:text="${#strings.replace(user2.roleName, 'ROLE_', '')}"></p></td>
             <td><th:block><a th:href="@{/admin/delete(id=${user1.getId()})}">Delete</a></th:block></td>
             <td><th:block><a th:href="@{/admin/updateUser(id=${user1.getId()})}">Edit</a></th:block></td>
@@ -32,27 +31,27 @@
     <table border="1">
         <tr>
             <th>Name:</th>
-            <th><input type="text" th:field="${user.name}"/></th>
+            <th><input type="text" th:field="${user.name}" required/></th>
         </tr>
         <tr>
             <th>Age:</th>
-            <th><input type="text" th:field="${user.age}" /></th>
+            <th><input type="text" th:field="${user.age}" required/></th>
         </tr>
         <tr>
             <th>Password:</th>
-            <th><input type="text" th:field="${user.password}" /></th>
+            <th><input type="text" th:field="${user.password}" required/></th>
         </tr>
         <tr>
             <th>Role:</th>
             <th>
-                <select th:name="roleName", size="1" required>
+                <select th:name="roleName", size="2" required>
                     <option th:each="role : ${roles}"
                             th:value="${role.roleName}"
                             th:utext="${#strings.replace(role.roleName, 'ROLE_', '')}"></option>
                 </select></th>
         </tr>
     </table>
-    <p><input type="submit" value="Submit" /></p>
+    <p><input type="submit" value="Accept" /></p>
 </form>
 
 <th:block><a th:href="@{/logout}">Exit</a></th:block>

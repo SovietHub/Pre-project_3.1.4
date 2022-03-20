@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
@@ -26,10 +25,9 @@ public class AdminController {
 
     @GetMapping(value = "")
     public String all(Model model) {
-        model.addAttribute("roles", roleService.index());
-        model.addAttribute("users", userService.index());
+        model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("user", new User());
-        model.addAttribute("role", new Role());
         return "panelAdmin";
     }
 
@@ -41,14 +39,14 @@ public class AdminController {
 
     @PostMapping(value = "/add")
     public String addUser(@ModelAttribute("user") User user, @RequestParam(name = "roleName") String roleName) {
-        user.addRoleUser(roleService.getRoleFromUser(roleName));
+        user.addRoleUser(roleService.getRoleByName(roleName));
         userService.save(user);
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/update")
     public String updateUser(@RequestParam("id") long id, Model model) {
-        model.addAttribute("roles", roleService.index());
+        model.addAttribute("roles", roleService.getAllRoles());
         User user = userService.show(id);
         model.addAttribute("userUpdate", user);
         return "updateUser";
@@ -60,7 +58,7 @@ public class AdminController {
             user.setRoles(userService.show(user.getId()).getRoles());
             userService.update(user);
         } else {
-            user.addRoleUser(roleService.getRoleFromUser(roleName));
+            user.addRoleUser(roleService.getRoleByName(roleName));
             userService.update(user);
         }
         return "redirect:/admin";

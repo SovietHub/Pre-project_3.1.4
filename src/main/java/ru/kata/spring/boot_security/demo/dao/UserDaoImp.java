@@ -20,7 +20,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     @Query(nativeQuery = true)
-    public List<User> index() {
+    public List<User> getAllUsers() {
         List<User> list = new ArrayList<User>();
         try {
             list = entityManager
@@ -61,7 +61,13 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void addRoleUser(long userId, Role role) {
-        entityManager.find(User.class,userId).addRoleUser(role);
+        entityManager.find(User.class, userId).addRoleUser(role);
     }
+
+    @Override
+    public User findByName(String userName) {
+        return (User) entityManager.createQuery("FROM User where name = :name").setParameter("name", userName).getSingleResult();
+    }
+
 
 }

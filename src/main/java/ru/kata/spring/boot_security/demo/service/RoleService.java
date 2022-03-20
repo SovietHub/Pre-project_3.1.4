@@ -15,9 +15,9 @@ public interface RoleService {
 
     void delete(long id);
 
-    List<Role> index();
+    List<Role> getAllRoles();
 
-    Set<Role> getAllRoles (long userId);
+    Set<Role> getAllRolesFromUser(long userId);
 
-    Role getRoleFromUser(String roleName);
+    Role getRoleByName(String roleName);
 }

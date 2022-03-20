@@ -34,7 +34,7 @@ public class User implements UserDetails {
         this.id = id;
         this.name = name;
         this.age = age;
-        this.password=password;
+        this.password = password;
     }
 
     public long getId() {
@@ -119,7 +119,7 @@ public class User implements UserDetails {
     }
 
     public void addRoleUser(Role role) {
-      this.roles.add(role);
+        this.roles.add(role);
     }
 
 }

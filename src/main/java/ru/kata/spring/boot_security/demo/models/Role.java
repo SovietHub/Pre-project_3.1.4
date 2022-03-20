@@ -17,13 +17,18 @@ public class Role implements GrantedAuthority {
     @Column(name = "role_name")
     private String roleName;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role"
+            , joinColumns = @JoinColumn(name = "role_id")
+            , inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private List<User> users;
 
     public Role() {
     }
 
-    public Role(Long id) {
+    public Role(long id) {
         this.id = id;
     }
 

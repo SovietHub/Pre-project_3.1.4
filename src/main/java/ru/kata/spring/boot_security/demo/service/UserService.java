@@ -14,7 +14,9 @@ public interface UserService {
 
     void delete(long id);
 
-    List<User> index();
+    List<User> getAllUsers();
 
     void addRoleUser(long userId, String roleName);
+
+    User findUserByName(String userName);
 }
