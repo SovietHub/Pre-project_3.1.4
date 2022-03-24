@@ -79,7 +79,6 @@
                                             <td><span th:each="userSer : ${us.roles}"><p
                                                     th:text="${#strings.replace(userSer.roleName, 'ROLE_', '')}"></p></span>
                                             </td>
-                                            <!-- Modal update -->
                                             <td>
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                         th:data-bs-target="'#updateModal' + ${stat.index}">Edit
