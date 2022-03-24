@@ -1,5 +1,7 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,23 +20,51 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "lastname")
+    private String lastname;
+
     @Column(name = "age")
     private int age;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "userid"),
+            inverseJoinColumns = @JoinColumn(name = "roleid"))
     private Set<Role> roles;
 
     public User() {
     }
 
-    public User(long id, String name, int age, String password) {
+    public User(long id, String name, String lastname, int age, String email, String password) {
         this.id = id;
         this.name = name;
+        this.lastname = lastname;
         this.age = age;
+        this.email = email;
         this.password = password;
+    }
+
+    public String getlastname() {
+        return lastname;
+    }
+
+    public void setlastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public long getId() {
@@ -71,7 +101,11 @@ public class User implements UserDetails {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
                 ", age=" + age +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 

@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -12,27 +13,28 @@ public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id")
+    private Long id;
 
-    @Column(name = "role_name")
+    @Column(name = "role", unique = true)
     private String roleName;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_role"
-            , joinColumns = @JoinColumn(name = "role_id")
-            , inverseJoinColumns = @JoinColumn(name = "user_id")
+            name = "users_roles"
+            , joinColumns = @JoinColumn(name = "roleid")
+            , inverseJoinColumns = @JoinColumn(name = "userid")
     )
     private List<User> users;
 
     public Role() {
     }
 
-    public Role(long id) {
+    public Role(Long id) {
         this.id = id;
     }
 
-    public Role(long id, String roleName) {
+    public Role(Long id, String roleName) {
         this.id = id;
         this.roleName = roleName;
     }
