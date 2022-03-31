@@ -61,7 +61,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void addRoleUser(long userId, Role role) {
-        entityManager.find(User.class, userId).addRoleUser(role);
+      entityManager.find(User.class, userId).addRoleToUser(role);
     }
 
     @Override

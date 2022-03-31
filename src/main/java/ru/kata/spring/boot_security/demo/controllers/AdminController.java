@@ -39,7 +39,7 @@ public class AdminController {
 
     @PostMapping(value = "/add")
     public String addUser(@ModelAttribute("user") User user, @RequestParam(name = "roleName") String roleName) {
-        user.addRoleUser(roleService.getRoleByName(roleName));
+        user.addRoleToUser(roleService.getRoleByName(roleName));
         userService.save(user);
         return "redirect:/admin";
     }
@@ -58,7 +58,7 @@ public class AdminController {
             user.setRoles(userService.show(user.getId()).getRoles());
             userService.update(user);
         } else {
-            user.addRoleUser(roleService.getRoleByName(roleName));
+            user.addRoleToUser(roleService.getRoleByName(roleName));
             userService.update(user);
         }
         return "redirect:/admin";
